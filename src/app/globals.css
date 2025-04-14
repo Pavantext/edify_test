@@ -1,0 +1,485 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+ 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+ 
+.prose {
+  @apply text-foreground;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose strong {
+  @apply text-foreground;
+}
+ 
+.prose ul {
+  @apply my-6 ml-6 list-disc [&>li]:mt-2;
+}
+ 
+.prose p {
+  @apply leading-7 [&:not(:first-child)]:mt-6;
+}
+ 
+.prose code {
+  @apply rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
+}
+ 
+/* Table styles */
+.prose table {
+  @apply w-full border-collapse border border-border my-4;
+}
+ 
+.prose thead {
+  @apply bg-muted/50;
+}
+ 
+.prose th {
+  @apply border border-border px-4 py-2 text-left font-semibold;
+}
+ 
+.prose td {
+  @apply border border-border px-4 py-2;
+}
+ 
+.prose tr {
+  @apply hover:bg-muted/30 transition-colors;
+}
+ 
+.prose tr:nth-child(even) {
+  @apply bg-muted/20;
+}
+ 
+/* Make tables responsive */
+.prose table {
+  @apply block overflow-x-auto;
+}
+ 
+/* Bold text in tables */
+.prose td strong,
+.prose th strong {
+  @apply font-bold text-foreground;
+}
+ 
+.table-container {
+  @apply my-4 overflow-x-auto rounded-lg border border-border;
+  max-height: 500px;
+}
+ 
+.markdown-table {
+  @apply min-w-full divide-y divide-border;
+}
+ 
+.markdown-table th,
+.markdown-table td {
+  @apply whitespace-nowrap;
+}
+ 
+/* Add these styles for the summary headers */
+.summary-content h2 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #000;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+ 
+.summary-content h2:first-child {
+  margin-top: 0;
+}
+ 
+.summary-content {
+  line-height: 1.6;
+}
+ 
+.summary-content ul {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+ 
+.summary-content li {
+  margin-bottom: 0.5rem;
+}
+ 
+.summary-content h2 {
+  color: #1a365d;
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-top: 2rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #e2e8f0;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+ 
+.summary-content h3 {
+  color: #2c5282;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+ 
+.summary-section {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  border: 1px solid #e2e8f0;
+}
+ 
+.summary-content ul {
+  list-style-type: none;
+  padding-left: 1.5rem;
+}
+ 
+.summary-content li::before {
+  content: "•";
+  color: #4299e1;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+ 
+.summary-section:hover {
+  border-color: #cbd5e0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+ 
+.text-card-foreground {
+  background-color: ghostwhite;
+}
+ 
+/* Add these styles or update existing ones */
+.search-help-popover code {
+  @apply text-xs px-1 py-0.5; /* Smaller code blocks */
+}
+ 
+.search-help-popover .text-sm {
+  @apply text-xs; /* Slightly smaller text */
+}
+ 
+.search-help-popover li {
+  @apply mb-2; /* Reduced margin between list items */
+}
+ 
+.search-help-popover .pl-4 {
+  @apply pl-3; /* Reduced padding for examples */
+}
+ 
+/* Add these styles to src/app/globals.css */
+ 
+/* Base container styles */
+.research-search-container {
+  @apply w-full px-4 md:px-6 lg:px-8 max-w-7xl mx-auto;
+}
+ 
+/* Search form responsive layout */
+.search-form-container {
+  @apply flex flex-col gap-4 md:flex-row md:items-center w-full;
+}
+ 
+/* Search input wrapper */
+.search-input-wrapper {
+  @apply flex-1 w-full;
+}
+ 
+/* Search input field */
+.search-input {
+  @apply w-full min-w-0;
+}
+ 
+/* Filters container */
+.filters-container {
+  @apply flex flex-col gap-2 md:flex-row md:items-center;
+}
+ 
+/* Filter select wrapper */
+.filter-select-wrapper {
+  @apply w-full md:w-auto;
+}
+ 
+/* Search button container */
+.search-button-container {
+  @apply w-full md:w-auto flex justify-center md:justify-start;
+}
+ 
+/* Results container */
+.results-container {
+  @apply mt-6 space-y-4;
+}
+ 
+/* Loading and error states */
+.loading-state,
+.error-state {
+  @apply text-center py-8;
+}
+ 
+/* Responsive padding for mobile */
+@media (max-width: 640px) {
+  .research-search-container {
+    @apply px-4;
+  }
+ 
+  .search-form-container {
+    @apply gap-3;
+  }
+ 
+  .filters-container {
+    @apply gap-2;
+  }
+}
+ 
+.paper-card {
+  @apply p-4 rounded-lg border shadow-sm;
+  @apply hover:shadow-md transition-shadow;
+  @apply flex flex-col gap-2;
+}
+ 
+/* For any modals or popovers */
+.modal-content {
+  @apply w-[90vw] max-w-md md:w-full;
+  @apply p-4 md:p-6;
+}
+ 
+/* For any filter dropdowns */
+.filter-dropdown {
+  @apply w-full md:w-[200px];
+}
+ 
+@media (max-width: 768px) {
+  .search-submit-button {
+    position: absolute;
+    top: 528px;
+    width: 90%
+  }
+}
+ 
+@media (width <= 768px) {
+  .search-submit-button {
+      position: absolute;
+      top: 528px;
+      width: 268px;
+  }
+}
+ 
+/* Add these new styles at the end of the file */
+@media (max-width: 768px) {
+  .search-tips-mobile {
+    width: 300px !important;
+    padding: 0.75rem !important;
+  }
+ 
+  .search-tips-mobile .search-tips-scroll {
+    max-height: 300px !important;
+    padding-right: 0.5rem !important;
+  }
+ 
+  .search-tips-mobile .search-tips-title {
+    font-size: 0.875rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+ 
+  .search-tips-mobile .search-tips-content {
+    font-size: 0.75rem !important;
+  }
+ 
+  .search-tips-mobile code {
+    font-size: 0.7rem !important;
+    padding: 0.1rem 0.3rem !important;
+  }
+ 
+  .search-tips-mobile .search-tips-example {
+    padding-left: 0.5rem !important;
+  }
+ 
+  .search-tips-mobile .search-tips-button {
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.75rem !important;
+  }
+ 
+  .search-tips-mobile .search-tips-list {
+    gap: 0.5rem !important;
+  }
+ 
+  .search-tips-mobile .search-tips-item {
+    padding: 0.25rem !important;
+  }
+ 
+  /* Improve layout of search tip items */
+  .search-tips-mobile .flex.items-center.gap-2 {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    margin-bottom: 0.25rem !important;
+  }
+ 
+  /* Adjust the position of the bullet points */
+  .search-tips-mobile li.relative.flex.items-start {
+    padding-left: 0.75rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+ 
+  .search-tips-mobile li.relative.flex.items-start:before {
+    left: -0.5rem !important;
+  }
+ 
+  /* Make buttons more tappable */
+  .search-tips-mobile button {
+    min-height: 2rem !important;
+    min-width: 3.5rem !important;
+    touch-action: manipulation !important;
+  }
+}
+ 
+.pr-32 {
+  padding-right: 2rem;
+}
+
+@media (min-width: 768px) {
+  .pr-32 {
+    padding-right: 8rem;
+  }
+}
+
+/* Media query for screen width between 640px and 768px */
+@media (min-width: 640px) and (max-width: 768px) {
+  .search-submit-button {
+    position: absolute;
+    width: 90%;
+    margin: 0 auto;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 500px; /* Adjust this value based on where you want the button to appear */
+    z-index: 10;
+  }
+ 
+  /* Add additional space below the search form to accommodate the repositioned button */
+  .search-form-container {
+    padding-bottom: 60px;
+  }
+}
+
+/* Add these responsive styles for the lesson plan evaluator */
+@media (max-width: 768px) {
+  .evaluation-container {
+    padding: 1rem 0.5rem;
+  }
+ 
+  .evaluation-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    height: auto;
+    max-height: none;
+  }
+ 
+  .results-card {
+    height: auto;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+ 
+  .evaluation-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    height: auto;
+    max-height: none;
+  }
+ 
+  .evaluation-header {
+    font-size: 1.75rem;
+    padding: 0 1rem;
+  }
+ 
+  .evaluation-subtext {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}
+ 
+/* Custom checkbox color styles */
+.checkbox-custom[data-state="checked"] {
+  background-color: #be85ff !important;
+}
