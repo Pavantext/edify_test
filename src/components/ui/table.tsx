@@ -2,25 +2,56 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-const Table = React.forwardRef<
-  HTMLTableElement,
-  React.HTMLAttributes<HTMLTableElement>
->(({ className, ...props }, ref) => (
-  <div className="relative w-full overflow-auto">
-    <table
-      ref={ref}
-      className={cn("w-full caption-bottom text-sm", className)}
-      {...props}
-    />
-  </div>
-))
+// Extended interface to add role and aria attributes for accessibility
+interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
+  /**
+   * For layout tables only. Set to "presentation" or "none" to indicate this table is not for data.
+   * Note: Using tables for layout is generally not recommended.
+   */
+  role?: "presentation" | "none" | string;
+}
+
+/**
+ * Table Component
+ * 
+ * ACCESSIBILITY NOTE:
+ * For data tables, always include a TableHeader with TableHead elements to provide
+ * proper headers for screen readers and other assistive technologies.
+ * 
+ * Example:
+ * <Table>
+ *   <TableHeader>
+ *     <TableRow>
+ *       <TableHead>Name</TableHead>
+ *       <TableHead>Age</TableHead>
+ *     </TableRow>
+ *   </TableHeader>
+ *   <TableBody>...</TableBody>
+ * </Table>
+ */
+const Table = React.forwardRef<HTMLTableElement, TableProps>(
+  ({ className, role, ...props }, ref) => (
+    <div className="relative w-full overflow-auto">
+      <table
+        ref={ref}
+        className={cn("w-full caption-bottom text-sm", className)}
+        role={role}
+        {...props}
+      />
+    </div>
+  )
+)
 Table.displayName = "Table"
 
 const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
-  <thead ref={ref} className={cn("[&_tr]:border-b", className)} {...props} />
+  <thead 
+    ref={ref} 
+    className={cn("[&_tr]:border-b", className)} 
+    {...props} 
+  />
 ))
 TableHeader.displayName = "TableHeader"
 
@@ -66,19 +97,29 @@ const TableRow = React.forwardRef<
 ))
 TableRow.displayName = "TableRow"
 
-const TableHead = React.forwardRef<
-  HTMLTableCellElement,
-  React.ThHTMLAttributes<HTMLTableCellElement>
->(({ className, ...props }, ref) => (
-  <th
-    ref={ref}
-    className={cn(
-      "h-10 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
-      className
-    )}
-    {...props}
-  />
-))
+// Extended interface for TableHead to support scope attribute
+interface TableHeadProps extends React.ThHTMLAttributes<HTMLTableCellElement> {
+  /**
+   * Defines the cells that the header element relates to.
+   * Default is "col" which is appropriate for column headers.
+   * Use "row" for row headers.
+   */
+  scope?: "col" | "row" | "colgroup" | "rowgroup";
+}
+
+const TableHead = React.forwardRef<HTMLTableCellElement, TableHeadProps>(
+  ({ className, scope = "col", ...props }, ref) => (
+    <th
+      ref={ref}
+      className={cn(
+        "h-10 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+        className
+      )}
+      scope={scope}
+      {...props}
+    />
+  )
+)
 TableHead.displayName = "TableHead"
 
 const TableCell = React.forwardRef<
