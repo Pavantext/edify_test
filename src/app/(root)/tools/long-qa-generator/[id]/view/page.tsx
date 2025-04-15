@@ -22,7 +22,7 @@ interface Question {
 interface ExportOption {
   label: string;
   value: string;
-  onClick: () => void;
+  onClick: () => void | Promise<void>;
 }
 
 export default function ViewQAPage() {
@@ -201,7 +201,12 @@ export default function ViewQAPage() {
     {
       label: "Download Word",
       value: "word",
-      onClick: downloadAsWord,
+      onClick: () => {
+        downloadAsWord().catch(error => {
+          console.error("Error downloading Word document:", error);
+          toast.error("Failed to download Word document");
+        });
+      },
     },
   ];
 
