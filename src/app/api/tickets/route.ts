@@ -1,6 +1,12 @@
 import { createServiceClient } from "@/utils/supabase/service";
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+import crypto from "crypto";
+
+// Helper function to generate cryptographically secure random string
+const generateSecureRandomString = (length: number = 7): string => {
+  return crypto.randomBytes(Math.ceil(length * 0.75)).toString('hex').slice(0, length);
+};
 
 export async function POST(request: Request) {
   try {
@@ -23,7 +29,7 @@ export async function POST(request: Request) {
     if (attachments.length > 0) {
       for (const file of attachments) {
         const fileExt = file.name.split('.').pop();
-        const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
+        const fileName = `${Date.now()}_${generateSecureRandomString()}.${fileExt}`;
 
         const { data: uploadData, error: uploadError } = await supabase
           .storage
