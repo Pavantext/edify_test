@@ -259,8 +259,14 @@ export default function MCQGenerator() {
   // Client-side only shuffle function
   const shuffleArray = <T,>(array: T[]): T[] => {
     const shuffled = [...array];
+    const crypto = window.crypto;
+    
     for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
+      // Generate a secure random number
+      const array = new Uint32Array(1);
+      crypto.getRandomValues(array);
+      const j = Math.floor((array[0] / (0xffffffff + 1)) * (i + 1));
+      
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     return shuffled;
