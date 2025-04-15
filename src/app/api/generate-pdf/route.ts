@@ -171,7 +171,7 @@ export async function POST(request: Request) {
         .replace(/<\/ul>/g, '')
         .replace(/<li>/g, '• ')
         .replace(/<\/li>/g, '\n')
-        .replace(/<[^>]+>/g, '')
+        .replace(/<[^>]{0,1000}>/g, '')
         .trim();
 
       // Add new page if not enough space
