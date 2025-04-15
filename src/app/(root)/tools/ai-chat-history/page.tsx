@@ -515,9 +515,9 @@ export default function AIChatHistory() {
   const MessageContent = ({ content }: { content: string; }) => {
     // Function to transform both formats to consistent HTML
     const transformContent = (content: string) => {
-      // First, handle the ::: format
+      // First, handle the ::: format with a ReDoS-safe regex
       content = content.replace(
-        /:::\s*disclaimer\s*(.*?)\s*:::/g,
+        /:::\s{0,10}disclaimer\s{0,10}([^:]*?)(?=\s{0,10}:::)/g,
         '<div class="disclaimer">$1</div>'
       );
 
