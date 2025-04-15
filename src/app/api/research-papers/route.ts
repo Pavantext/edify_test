@@ -98,7 +98,8 @@ function calculateTimeRemaining(resetTimestamp: string | null): string {
 function optimizeSearchQuery(query: string): string {
   // Remove parentheses and common words
   const simplified = query
-    .replace(/\(.*?\)/g, '') // Remove content in parentheses
+    // Remove content in parentheses with bounded length
+    .replace(/\([^)]{0,1000}\)/g, '')
     .split(' ')
     .filter(word => word.length > 2) // Remove very short words
     .slice(0, 6) // Limit to 6 key terms
