@@ -35,7 +35,12 @@ const PaginationItem = React.forwardRef<
 PaginationItem.displayName = "PaginationItem"
 
 type PaginationLinkProps = {
-  isActive?: boolean
+  isActive?: boolean;
+  /**
+   * The accessible label for the pagination link.
+   * Required if no children content is provided.
+   */
+  "aria-label"?: string;
 } & Pick<ButtonProps, "size"> &
   React.ComponentProps<"a">
 
@@ -43,20 +48,34 @@ const PaginationLink = ({
   className,
   isActive,
   size = "icon",
+  children,
+  "aria-label": ariaLabel,
   ...props
-}: PaginationLinkProps) => (
-  <a
-    aria-current={isActive ? "page" : undefined}
-    className={cn(
-      buttonVariants({
-        variant: isActive ? "outline" : "ghost",
-        size,
-      }),
-      className
-    )}
-    {...props}
-  />
-)
+}: PaginationLinkProps) => {
+  // Ensure there's either visible content (children) or an accessible label
+  if (!children && !ariaLabel) {
+    console.warn(
+      "PaginationLink must have either children content or an aria-label for accessibility"
+    );
+  }
+
+  return (
+    <a
+      aria-current={isActive ? "page" : undefined}
+      aria-label={ariaLabel}
+      className={cn(
+        buttonVariants({
+          variant: isActive ? "outline" : "ghost",
+          size,
+        }),
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </a>
+  );
+}
 PaginationLink.displayName = "PaginationLink"
 
 const PaginationPrevious = ({
