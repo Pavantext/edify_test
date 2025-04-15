@@ -9,6 +9,23 @@ interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
    * Note: Using tables for layout is generally not recommended.
    */
   role?: "presentation" | "none" | string;
+  
+  /**
+   * Optional array of header labels that will automatically generate a header row
+   * Use this to ensure tables always have headers for accessibility
+   */
+  headers?: string[];
+  
+  /**
+   * Optional label for the table that can be referenced by aria-labelledby
+   */
+  ariaLabel?: string;
+  
+  /**
+   * Whether this table is used for layout purposes only and not for data presentation
+   * Setting this to true will automatically set role="presentation" and suppress accessibility warnings
+   */
+  isLayoutTable?: boolean;
 }
 
 /**
@@ -18,7 +35,21 @@ interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
  * For data tables, always include a TableHeader with TableHead elements to provide
  * proper headers for screen readers and other assistive technologies.
  * 
- * Example:
+ * Tables MUST have headers to be accessible. You can provide headers in two ways:
+ * 1. Using the headers prop directly on the Table component
+ * 2. Including a TableHeader with TableHead elements as children
+ * 
+ * Example 1 (using headers prop):
+ * <Table headers={["Name", "Age"]}>
+ *   <TableBody>
+ *     <TableRow>
+ *       <TableCell>John Doe</TableCell>
+ *       <TableCell>24</TableCell>
+ *     </TableRow>
+ *   </TableBody>
+ * </Table>
+ * 
+ * Example 2 (using TableHeader component):
  * <Table>
  *   <TableHeader>
  *     <TableRow>
@@ -28,18 +59,59 @@ interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
  *   </TableHeader>
  *   <TableBody>...</TableBody>
  * </Table>
+ * 
+ * If this table is used for layout purposes only (not recommended), set the isLayoutTable prop to true.
  */
 const Table = React.forwardRef<HTMLTableElement, TableProps>(
-  ({ className, role, ...props }, ref) => (
-    <div className="relative w-full overflow-auto">
-      <table
-        ref={ref}
-        className={cn("w-full caption-bottom text-sm", className)}
-        role={role}
-        {...props}
-      />
-    </div>
-  )
+  ({ className, role, headers, ariaLabel, isLayoutTable = false, children, ...props }, ref) => {
+    const tableRole = role || (isLayoutTable ? "presentation" : undefined);
+    
+    // Generate header row if headers prop is provided
+    const headerRow = headers && headers.length > 0 ? (
+      <TableHeader>
+        <TableRow>
+          {headers.map((header, index) => (
+            <TableHead key={index}>{header}</TableHead>
+          ))}
+        </TableRow>
+      </TableHeader>
+    ) : null;
+    
+    // Check if there's already a TableHeader among children
+    let hasHeaderInChildren = false;
+    React.Children.forEach(children, child => {
+      if (React.isValidElement(child) && child.type === TableHeader) {
+        hasHeaderInChildren = true;
+      }
+    });
+    
+    // For development warnings (won't be included in production)
+    if (process.env.NODE_ENV !== 'production' && 
+        !isLayoutTable && 
+        !tableRole && 
+        !headerRow && 
+        !hasHeaderInChildren) {
+      console.warn(
+        'Accessibility Warning: Tables should have headers using either the headers prop or TableHeader component. ' +
+        'If this is a layout table, set isLayoutTable to true.'
+      );
+    }
+
+    return (
+      <div className="relative w-full overflow-auto">
+        <table
+          ref={ref}
+          className={cn("w-full caption-bottom text-sm", className)}
+          role={tableRole}
+          aria-label={ariaLabel}
+          {...props}
+        >
+          {headerRow}
+          {children}
+        </table>
+      </div>
+    )
+  }
 )
 Table.displayName = "Table"
 
