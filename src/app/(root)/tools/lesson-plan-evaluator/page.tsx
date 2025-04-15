@@ -299,9 +299,12 @@ const LessonPlanEvaluator = () => {
 
     try {
       const fileExt = file.name.split(".").pop();
-      const fileName = `${Math.random()}.${fileExt}`;
-      const filePath = `lesson-plans/${fileName}`;
+      // Generate a cryptographically secure random filename
+      const array = new Uint32Array(1);
+      window.crypto.getRandomValues(array);
+      const fileName = `${array[0]}.${fileExt}`;
 
+      const filePath = `lesson-plans/${fileName}`;
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from("documents")
         .upload(filePath, file);
@@ -311,7 +314,6 @@ const LessonPlanEvaluator = () => {
       const { data: urlData } = supabase.storage
         .from("documents")
         .getPublicUrl(filePath);
-
       if (!urlData) throw new Error("Failed to get public URL");
 
       const fileUrl = urlData.publicUrl;
