@@ -159,11 +159,14 @@ Study Limitations:
 
     // Clean up the summary text while preserving HTML headers and bullet points
     const cleanedSummary = summary
-      .replace(/\n\s*\n/g, "\n") // Replace multiple newlines with single newline
-      .replace(/\*\*([^:]+):\*\*/g, "<br/><strong>$1:</strong><br/>") // Add line breaks before and after section titles
-      .replace(/\*([^*]+)\*/g, "<li>$1</li>") // Convert asterisk bullets to HTML list items without bold
-      .replace(/((?:<li>.*?<\/li>\n?)+)/g, "<ul>$1</ul>") // Wrap consecutive list items in ul tags
-      // .replace(/(<h2>.*?<\/h2>)/g, '<br/>$1')
+      // Replace multiple newlines with single newline (bounded whitespace)
+      .replace(/\n\s{0,100}\n/g, "\n")
+      // Add line breaks before and after section titles (bounded length)
+      .replace(/\*\*([^:]{1,200}):\*\*/g, "<br/><strong>$1:</strong><br/>")
+      // Convert asterisk bullets to HTML list items (bounded length)
+      .replace(/\*([^*]{1,1000})\*/g, "<li>$1</li>")
+      // Wrap consecutive list items in ul tags (bounded repetition)
+      .replace(/((?:<li>[^<]{1,1000}<\/li>\n?){1,100})/g, "<ul>$1</ul>")
       .split("\n")
       .map((line) => line.trim())
       .filter((line) => line)
