@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
+import crypto from 'crypto';
 
 const CORE_API_KEY = process.env.CORE_API_KEY;
 const MAX_RETRIES = 3;
@@ -16,6 +17,13 @@ const cache = new Map<string, { data: any; timestamp: number }>();
 
 // Helper function to delay execution
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Helper function to generate secure random number between 0 and max
+const getSecureRandom = (max: number): number => {
+  const randomBytes = crypto.randomBytes(4);
+  const randomValue = randomBytes.readUInt32BE(0);
+  return (randomValue / 0xffffffff) * max;
+};
 
 // Helper function for caching
 function getCachedData(key: string) {
@@ -34,14 +42,15 @@ async function makeRequestWithRetry(url: string, options: RequestInit, retryCoun
     if (response.status === 429) {
       if (retryCount < MAX_RETRIES) {
         const retryAfter = parseInt(response.headers.get('Retry-After') || '1', 10);
-        // Exponential backoff with jitter
+        // Exponential backoff with secure jitter
         const backoffTime = Math.min(
-          RETRY_DELAY * Math.pow(2, retryCount) + Math.random() * 1000,
+          RETRY_DELAY * Math.pow(2, retryCount) + getSecureRandom(1000),
           10000 // Max 10 seconds
         );
         await delay(Math.max(retryAfter * 1000, backoffTime));
         return makeRequestWithRetry(url, options, retryCount + 1);
       }
+      throw new Error("Max retries exceeded");
     }
     
     return response;
