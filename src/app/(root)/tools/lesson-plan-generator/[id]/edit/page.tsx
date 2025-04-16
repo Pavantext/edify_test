@@ -386,8 +386,9 @@ export default function LessonPlanEdit() {
               <CardContent>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-1">Topic</label>
+                    <label className="block text-sm font-medium mb-1" htmlFor="topic">Topic</label>
                     <input
+                      id="topic"
                       type="text"
                       value={lessonPlan.overview.topic}
                       onChange={(e) =>
@@ -397,8 +398,9 @@ export default function LessonPlanEdit() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Subject</label>
+                    <label className="block text-sm font-medium mb-1" htmlFor="subject">Subject</label>
                     <input
+                      id="subject"
                       type="text"
                       value={lessonPlan.overview.subject}
                       onChange={(e) =>
@@ -408,8 +410,9 @@ export default function LessonPlanEdit() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Year Group</label>
+                    <label className="block text-sm font-medium mb-1" htmlFor="yearGroup">Year Group</label>
                     <input
+                      id="yearGroup"
                       type="text"
                       value={lessonPlan.overview.yearGroup}
                       onChange={(e) =>
@@ -419,8 +422,9 @@ export default function LessonPlanEdit() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Duration (minutes)</label>
+                    <label className="block text-sm font-medium mb-1" htmlFor="duration">Duration (minutes)</label>
                     <input
+                      id="duration"
                       type="number"
                       value={lessonPlan.overview.duration || 0}
                       onChange={(e) =>
@@ -545,8 +549,9 @@ export default function LessonPlanEdit() {
                 <CardContent>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium mb-1">Description</label>
+                      <label className="block text-sm font-medium mb-1" htmlFor="description">Description</label>
                       <textarea
+                        id="description"
                         value={option.starterActivity.description}
                         onChange={(e) =>
                           updateOption(optionIndex, "starterActivity", {
@@ -558,8 +563,9 @@ export default function LessonPlanEdit() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1">Duration (minutes)</label>
+                      <label className="block text-sm font-medium mb-1" htmlFor="duration">Duration (minutes)</label>
                       <input
+                        id="duration"
                         type="number"
                         value={option.starterActivity.duration || 0}
                         onChange={(e) =>
@@ -572,10 +578,11 @@ export default function LessonPlanEdit() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1">Materials</label>
+                      <label className="block text-sm font-medium mb-1" htmlFor="materials">Materials</label>
                       {option.starterActivity.materials.map((material, idx) => (
                         <div key={idx} className="flex items-center space-x-2 mb-2">
                           <input
+                            id="materials"
                             type="text"
                             value={material}
                             onChange={(e) => {
@@ -619,10 +626,11 @@ export default function LessonPlanEdit() {
                       </Button>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1">Instructions</label>
+                      <label className="block text-sm font-medium mb-1" htmlFor="instructions">Instructions</label>
                       {option.starterActivity.instructions.map((instruction, idx) => (
                         <div key={idx} className="flex items-center space-x-2 mb-2">
                           <input
+                            id="instructions"
                             type="text"
                             value={instruction}
                             onChange={(e) => {
@@ -692,8 +700,9 @@ export default function LessonPlanEdit() {
                   <CardContent>
                     <div className="space-y-4">
                       <div>
-                        <label className="block text-sm font-medium mb-1">Description</label>
+                        <label className="block text-sm font-medium mb-1" htmlFor="description">Description</label>
                         <textarea
+                          id="description"
                           value={activity.description}
                           onChange={(e) => {
                             const newActivities = [...option.mainActivities];
@@ -707,8 +716,9 @@ export default function LessonPlanEdit() {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-1">Duration (minutes)</label>
+                        <label className="block text-sm font-medium mb-1" htmlFor="duration">Duration (minutes)</label>
                         <input
+                          id="duration"
                           type="number"
                           value={activity.duration || 0}
                           onChange={(e) => {
@@ -723,10 +733,11 @@ export default function LessonPlanEdit() {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-1">Materials</label>
+                        <label className="block text-sm font-medium mb-1" htmlFor="materials">Materials</label>
                         {(activity.materials || []).map((material, idx) => (
                           <div key={idx} className="flex items-center space-x-2 mb-2">
                             <input
+                              id="materials"
                               type="text"
                               value={material}
                               onChange={(e) => {
@@ -774,10 +785,11 @@ export default function LessonPlanEdit() {
                         </Button>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-1">Instructions</label>
+                        <label className="block text-sm font-medium mb-1" htmlFor="instructions">Instructions</label>
                         {(activity.instructions || []).map((instruction, idx) => (
                           <div key={idx} className="flex items-center space-x-2 mb-2">
                             <input
+                              id="instructions"
                               type="text"
                               value={instruction}
                               onChange={(e) => {
@@ -856,8 +868,9 @@ export default function LessonPlanEdit() {
                 <CardContent>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium mb-1">Description</label>
+                      <label className="block text-sm font-medium mb-1" htmlFor="description">Description</label>
                       <textarea
+                        id="description"
                         value={option.plenary.description}
                         onChange={(e) =>
                           updateOption(optionIndex, "plenary", {
@@ -869,8 +882,9 @@ export default function LessonPlanEdit() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1">Duration (minutes)</label>
+                      <label className="block text-sm font-medium mb-1" htmlFor="duration">Duration (minutes)</label>
                       <input
+                        id="duration"
                         type="number"
                         value={option.plenary.duration || 0}
                         onChange={(e) =>
@@ -883,10 +897,11 @@ export default function LessonPlanEdit() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1">Materials</label>
+                      <label className="block text-sm font-medium mb-1" htmlFor="materials">Materials</label>
                       {(option.plenary.materials || []).map((material, idx) => (
                         <div key={idx} className="flex items-center space-x-2 mb-2">
                           <input
+                            id="materials"
                             type="text"
                             value={material}
                             onChange={(e) => {
@@ -930,10 +945,11 @@ export default function LessonPlanEdit() {
                       </Button>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1">Instructions</label>
+                      <label className="block text-sm font-medium mb-1" htmlFor="instructions">Instructions</label>
                       {(option.plenary.instructions || []).map((instruction, idx) => (
                         <div key={idx} className="flex items-center space-x-2 mb-2">
                           <input
+                            id="instructions"
                             type="text"
                             value={instruction}
                             onChange={(e) => {
