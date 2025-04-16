@@ -551,10 +551,11 @@ export default function QuestionGenerator() {
           <Card className='p-6'>
             <form onSubmit={handleSubmit} className='space-y-6'>
               <div className="mb-4">
-                <label className='block text-sm font-medium mb-2'>
+                <label htmlFor="input-method" className='block text-sm font-medium mb-2'>
                   Select Input Method
                 </label>
                 <RadioGroup
+                  id="input-method"
                   value={inputType}
                   onValueChange={(value) => handleInputTypeChange(value as "topic" | "file")}
                   className="flex flex-col space-y-2"
@@ -573,7 +574,7 @@ export default function QuestionGenerator() {
 
               {inputType === "file" && (
                 <div>
-                  <label className='block text-sm font-medium mb-2'>
+                  <label htmlFor="file-upload" className='block text-sm font-medium mb-2'>
                     Upload Document
                   </label>
                   <div className='flex items-center space-x-2'>
@@ -602,10 +603,11 @@ export default function QuestionGenerator() {
 
               {inputType === "topic" && (
                 <div>
-                  <label className='block text-sm font-medium mb-2'>
+                  <label htmlFor="topic-input" className='block text-sm font-medium mb-2'>
                     Topic or Concept
                   </label>
                   <textarea
+                    id="topic-input"
                     value={topic}
                     onChange={(e) => setTopic(e.target.value)}
                     className={`w-full p-2 border rounded-md min-h-[100px] ${isApprovedContent ? 'bg-gray-100 cursor-not-allowed' : ''}`}
@@ -617,10 +619,11 @@ export default function QuestionGenerator() {
 
               <div className='grid grid-cols-2 gap-4'>
                 <div>
-                  <label className='block text-sm font-medium mb-2'>
+                  <label htmlFor="questions-per-level" className='block text-sm font-medium mb-2'>
                     Questions per Level
                   </label>
                   <select
+                    id="questions-per-level"
                     value={numberOfQuestions}
                     onChange={(e) =>
                       setNumberOfQuestions(Number(e.target.value))
@@ -637,10 +640,11 @@ export default function QuestionGenerator() {
                 </div>
 
                 <div>
-                  <label className='block text-sm font-medium mb-2'>
+                  <label htmlFor="complexity-level" className='block text-sm font-medium mb-2'>
                     Complexity Level
                   </label>
                   <select
+                    id="complexity-level"
                     value={complexity}
                     onChange={(e) =>
                       setComplexity(
@@ -658,16 +662,18 @@ export default function QuestionGenerator() {
               </div>
 
               <div>
-                <label className='block text-sm font-medium mb-2'>
+                <label htmlFor="taxonomy-levels" className='block text-sm font-medium mb-2'>
                   Select Bloom's Taxonomy Levels
                 </label>
-                <div className='grid grid-cols-2 gap-2'>
+                <div id="taxonomy-levels" className='grid grid-cols-2 gap-2'>
                   {bloomLevels.map((level) => (
                     <label
                       key={level}
+                      htmlFor={`level-${level}`}
                       className={`flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 cursor-pointer ${isApprovedContent ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                       <Checkbox
+                        id={`level-${level}`}
                         checked={selectedLevels.includes(level)}
                         onCheckedChange={() => handleLevelChange(level)}
                         disabled={isApprovedContent}
