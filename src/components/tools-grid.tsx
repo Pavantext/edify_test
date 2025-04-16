@@ -113,7 +113,8 @@ const tools = [
   },
 ];
 
-const disabledTools: any[] = [];
+// We can uncomment and populate this array later if needed
+// const disabledTools: any[] = [];
 
 export default function ToolsGrid() {
   return (
@@ -144,21 +145,6 @@ export default function ToolsGrid() {
               </CardContent>
             </Card>
           </Link>
-        ))}
-        {disabledTools.map((tool) => (
-          <div key={tool.title}>
-            <Card className='h-full opacity-50 cursor-not-allowed'>
-              <CardHeader>
-                <div className='flex items-center gap-2'>
-                  <tool.icon className='w-6 h-6 text-[#70CDB3]' />
-                  <CardTitle className='text-lg'>{tool.title}</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>{tool.description}</CardDescription>
-              </CardContent>
-            </Card>
-          </div>
         ))}
       </div>
     </div>
