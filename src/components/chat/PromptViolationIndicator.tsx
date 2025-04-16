@@ -42,22 +42,9 @@ export function PromptViolationIndicator({ flags, contentId, onStatusUpdate }: P
   const searchParams = useSearchParams();
   const approvedId = searchParams.get('approved');
   const isApprovedFromEmail = approvedId === contentId;
-
-  // If this content is approved from email, show only approved status
-  if (isApprovedFromEmail || flags.moderator_approval === 'approved') {
-    return (
-      <Alert className="mt-2 bg-green-50 border-green-200">
-        <ShieldCheck className="h-4 w-4 text-green-600" />
-        <AlertTitle className="text-xs text-green-700">Approved Content</AlertTitle>
-        <AlertDescription className="text-xs text-green-600">
-          This content has been reviewed and approved by a moderator
-        </AlertDescription>
-      </Alert>
-    );
-  }
-
+  
   // Create a stable copy of the flags to prevent stale renders
-  const currentFlags = React.useMemo(() => ({...flags}), [flags]);
+  const currentFlags = React.useMemo(() => ({ ...flags }), [flags]);
 
   const violations = React.useMemo(() => 
     Object.entries(currentFlags)
@@ -73,11 +60,24 @@ export function PromptViolationIndicator({ flags, contentId, onStatusUpdate }: P
     [currentFlags]
   );
 
-  // Add debug logging
+  // Add debug logging - moved outside of conditional block
   React.useEffect(() => {
     console.log('Violation Indicator - Current Flags:', currentFlags);
     console.log('Violation Indicator - Processed Violations:', violations);
   }, [currentFlags, violations]);
+
+  // If this content is approved from email, show only approved status
+  if (isApprovedFromEmail || flags.moderator_approval === 'approved') {
+    return (
+      <Alert className="mt-2 bg-green-50 border-green-200">
+        <ShieldCheck className="h-4 w-4 text-green-600" />
+        <AlertTitle className="text-xs text-green-700">Approved Content</AlertTitle>
+        <AlertDescription className="text-xs text-green-600">
+          This content has been reviewed and approved by a moderator
+        </AlertDescription>
+      </Alert>
+    );
+  }
 
   if (violations.length === 0) {
     return (
