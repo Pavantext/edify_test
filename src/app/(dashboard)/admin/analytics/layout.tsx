@@ -3,7 +3,7 @@ import { Sidebar } from "@/components/dashboard/analytics/sidebar"
 export default function AnalyticsLayout({
   children,
 }: {
-  children: React.ReactNode
+  readonly children: React.ReactNode
 }) {
   return (
     <div className="flex min-h-[calc(100vh-4rem)]">
