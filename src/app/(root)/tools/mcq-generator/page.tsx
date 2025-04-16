@@ -229,7 +229,7 @@ export default function MCQGenerator() {
       answersPerQuestion: Number(formData.get("answerCount") || 4),
       difficulty: formData.get("difficulty") || "medium",
       questionCount: Number(formData.get("questionCount")),
-      inputMethod: hasApprovedId ? inputMethod : inputMethod,
+      inputMethod: inputMethod,
       fileUrl: uploadedFileUrl,
       approvedId: approvedId,
     };
