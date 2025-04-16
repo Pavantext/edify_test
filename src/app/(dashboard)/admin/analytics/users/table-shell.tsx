@@ -72,8 +72,19 @@ export function UsersTableShell({ users: initialUsers }: { users: User[] }) {
         ? col.cell(props) 
         : props.getValue();
       return (
-        <div onClick={() => router.push(`/admin/analytics/users/${props.row.original.id}`)} 
-            className="cursor-pointer">
+        <div 
+          onClick={() => router.push(`/admin/analytics/users/${props.row.original.id}`)} 
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              router.push(`/admin/analytics/users/${props.row.original.id}`);
+            }
+          }}
+          role="button"
+          tabIndex={0}
+          className="cursor-pointer"
+          aria-label={`View details for user ${props.row.original.email || 'Unknown'}`}
+        >
           {originalCell}
         </div>
       );
