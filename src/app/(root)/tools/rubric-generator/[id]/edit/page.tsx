@@ -291,8 +291,9 @@ export default function RubricEdit() {
               <CardContent>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-1">Topic</label>
+                    <label htmlFor="topic" className="block text-sm font-medium mb-1">Topic</label>
                     <input
+                      id="topic"
                       type="text"
                       value={rubric.metadata.topic}
                       onChange={(e) => updateMetadata("topic", e.target.value)}
@@ -300,8 +301,9 @@ export default function RubricEdit() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Assessment Type</label>
+                    <label htmlFor="assessment-type" className="block text-sm font-medium mb-1">Assessment Type</label>
                     <input
+                      id="assessment-type"
                       type="text"
                       value={rubric.metadata.assessmentType}
                       onChange={(e) => updateMetadata("assessmentType", e.target.value)}
@@ -309,8 +311,9 @@ export default function RubricEdit() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Key Stage</label>
+                    <label htmlFor="key-stage" className="block text-sm font-medium mb-1">Key Stage</label>
                     <input
+                      id="key-stage"
                       type="text"
                       value={rubric.metadata.keyStage}
                       onChange={(e) => updateMetadata("keyStage", e.target.value)}
@@ -318,8 +321,9 @@ export default function RubricEdit() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Year Group</label>
+                    <label htmlFor="year-group" className="block text-sm font-medium mb-1">Year Group</label>
                     <input
+                      id="year-group"
                       type="text"
                       value={rubric.metadata.yearGroup}
                       onChange={(e) => updateMetadata("yearGroup", e.target.value)}
@@ -371,6 +375,7 @@ export default function RubricEdit() {
                               }
                               placeholder="Criterion Name"
                               className="w-full p-2 border rounded-md"
+                              id={`criterion-name-${criterionIndex}`}
                             />
                             <Button
                               variant="destructive"
@@ -388,8 +393,9 @@ export default function RubricEdit() {
                                 <h4 className="font-semibold mb-4 capitalize">{level}</h4>
                                 <div className="space-y-4">
                                   <div>
-                                    <label className="block text-sm font-medium mb-1">Score</label>
+                                    <label htmlFor={`score-${criterionIndex}-${level}`} className="block text-sm font-medium mb-1">Score</label>
                                     <input
+                                      id={`score-${criterionIndex}-${level}`}
                                       type="number"
                                       value={criterion.levels[level]?.score || 0}
                                       onChange={(e) =>
@@ -403,8 +409,9 @@ export default function RubricEdit() {
                                     />
                                   </div>
                                   <div>
-                                    <label className="block text-sm font-medium mb-1">Description</label>
+                                    <label htmlFor={`description-${criterionIndex}-${level}`} className="block text-sm font-medium mb-1">Description</label>
                                     <textarea
+                                      id={`description-${criterionIndex}-${level}`}
                                       value={criterion.levels[level]?.description || ""}
                                       onChange={(e) =>
                                         updateCriterion(
@@ -417,8 +424,9 @@ export default function RubricEdit() {
                                     />
                                   </div>
                                   <div>
-                                    <label className="block text-sm font-medium mb-1">Feedback</label>
+                                    <label htmlFor={`feedback-${criterionIndex}-${level}`} className="block text-sm font-medium mb-1">Feedback</label>
                                     <textarea
+                                      id={`feedback-${criterionIndex}-${level}`}
                                       value={criterion.levels[level]?.feedback || ""}
                                       onChange={(e) =>
                                         updateCriterion(
