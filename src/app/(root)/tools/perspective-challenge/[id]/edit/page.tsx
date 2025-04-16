@@ -248,8 +248,9 @@ export default function EditAnalysis() {
           </CardHeader>
           <CardContent className="space-y-4">
           <div>
-              <label className="block text-sm font-medium mb-1">Main Argument</label>
+              <label htmlFor="main-argument" className="block text-sm font-medium mb-1">Main Argument</label>
             <Textarea
+                id="main-argument"
                 value={analysis.analysis.mainPoints.mainArgument}
                 onChange={(e) =>
                   updateAnalysis("analysis.mainPoints.mainArgument", e.target.value)
@@ -260,7 +261,7 @@ export default function EditAnalysis() {
 
           <div>
               <div className="flex justify-between items-center mb-2">
-                <label className="block text-sm font-medium">Key Points</label>
+                <label htmlFor="key-points" className="block text-sm font-medium">Key Points</label>
               <Button
                   variant="outline"
                   size="sm"
@@ -272,6 +273,7 @@ export default function EditAnalysis() {
               {analysis.analysis.mainPoints.keyPoints.map((point: string, index: number) => (
                 <div key={index} className="flex items-center gap-2 mb-2">
                   <Input
+                    id={`key-point-${index}`}
                     value={point}
                     onChange={(e) => {
                       const newPoints = [...analysis.analysis.mainPoints.keyPoints];
@@ -292,7 +294,7 @@ export default function EditAnalysis() {
 
             <div>
               <div className="flex justify-between items-center mb-2">
-                <label className="block text-sm font-medium">Implicit Assumptions</label>
+                <label htmlFor="implicit-assumptions" className="block text-sm font-medium">Implicit Assumptions</label>
           <Button
                   variant="outline"
                   size="sm"
@@ -305,6 +307,7 @@ export default function EditAnalysis() {
                 (assumption: string, index: number) => (
                   <div key={index} className="flex items-center gap-2 mb-2">
                     <Input
+                      id={`implicit-assumption-${index}`}
                       value={assumption}
                       onChange={(e) => {
                         const newAssumptions = [
@@ -377,7 +380,7 @@ export default function EditAnalysis() {
                       />
                       <div>
                         <div className="flex justify-between items-center mb-2">
-                          <label className="block text-sm font-medium">Points</label>
+                          <label htmlFor={`perspective-${index}-points`} className="block text-sm font-medium">Points</label>
                           <Button
                             variant="outline"
                             size="sm"
@@ -401,6 +404,7 @@ export default function EditAnalysis() {
                         {perspective.points.map((point: string, pointIndex: number) => (
                           <div key={pointIndex} className="flex items-center gap-2 mb-2">
                         <Input
+                          id={`perspective-${index}-point-${pointIndex}`}
                           value={point}
                               onChange={(e) => {
                                 const newPerspectives = [
@@ -476,7 +480,7 @@ export default function EditAnalysis() {
             {/* Supporting Evidence */}
             <div>
               <div className="flex justify-between items-center mb-2">
-                <label className="block text-sm font-medium">Supporting Evidence</label>
+                <label htmlFor="supporting-evidence" className="block text-sm font-medium">Supporting Evidence</label>
                 <Button
                   variant="outline"
                   size="sm"
@@ -489,6 +493,7 @@ export default function EditAnalysis() {
                 (evidence: string, index: number) => (
                   <div key={index} className="flex items-center gap-2 mb-2">
                     <Input
+                      id={`supporting-evidence-${index}`}
                       value={evidence}
                       onChange={(e) => {
                         const newEvidence = [
@@ -518,7 +523,7 @@ export default function EditAnalysis() {
             {/* Challenging Evidence */}
             <div>
               <div className="flex justify-between items-center mb-2">
-                <label className="block text-sm font-medium">Challenging Evidence</label>
+                <label htmlFor="challenging-evidence" className="block text-sm font-medium">Challenging Evidence</label>
                 <Button
                   variant="outline"
                   size="sm"
@@ -531,6 +536,7 @@ export default function EditAnalysis() {
                 (evidence: string, index: number) => (
                   <div key={index} className="flex items-center gap-2 mb-2">
                     <Input
+                      id={`challenging-evidence-${index}`}
                       value={evidence}
                       onChange={(e) => {
                         const newEvidence = [
@@ -560,7 +566,7 @@ export default function EditAnalysis() {
             {/* Research Questions */}
             <div>
               <div className="flex justify-between items-center mb-2">
-                <label className="block text-sm font-medium">Research Questions</label>
+                <label htmlFor="research-questions" className="block text-sm font-medium">Research Questions</label>
                 <Button
                   variant="outline"
                   size="sm"
@@ -575,6 +581,7 @@ export default function EditAnalysis() {
                 (question: string, index: number) => (
                   <div key={index} className="flex items-center gap-2 mb-2">
                     <Input
+                      id={`research-question-${index}`}
                       value={question}
                       onChange={(e) => {
                         const newQuestions = [
@@ -615,7 +622,7 @@ export default function EditAnalysis() {
             {/* Potential Biases */}
             <div>
               <div className="flex justify-between items-center mb-2">
-                <label className="block text-sm font-medium">Potential Biases</label>
+                <label htmlFor="potential-biases" className="block text-sm font-medium">Potential Biases</label>
                 <Button
                   variant="outline"
                   size="sm"
@@ -628,6 +635,7 @@ export default function EditAnalysis() {
                 (bias: string, index: number) => (
                   <div key={index} className="flex items-center gap-2 mb-2">
                     <Input
+                      id={`potential-bias-${index}`}
                       value={bias}
                       onChange={(e) => {
                         const newBiases = [
@@ -657,7 +665,7 @@ export default function EditAnalysis() {
             {/* Reduction Suggestions */}
             <div>
               <div className="flex justify-between items-center mb-2">
-                <label className="block text-sm font-medium">Reduction Suggestions</label>
+                <label htmlFor="reduction-suggestions" className="block text-sm font-medium">Reduction Suggestions</label>
                 <Button
                   variant="outline"
                   size="sm"
@@ -672,6 +680,7 @@ export default function EditAnalysis() {
                 (suggestion: string, index: number) => (
                   <div key={index} className="flex items-center gap-2 mb-2">
                     <Input
+                      id={`reduction-suggestion-${index}`}
                       value={suggestion}
                       onChange={(e) => {
                         const newSuggestions = [
@@ -711,7 +720,7 @@ export default function EditAnalysis() {
           <CardContent>
             <div>
               <div className="flex justify-between items-center mb-2">
-                <label className="block text-sm font-medium">Suggestions</label>
+                <label htmlFor="adaptability-suggestions" className="block text-sm font-medium">Suggestions</label>
                 <Button
                   variant="outline"
                   size="sm"
@@ -724,6 +733,7 @@ export default function EditAnalysis() {
                 (suggestion: string, index: number) => (
                   <div key={index} className="flex items-center gap-2 mb-2">
                     <Input
+                      id={`adaptability-suggestion-${index}`}
                       value={suggestion}
                       onChange={(e) => {
                         const newSuggestions = [
