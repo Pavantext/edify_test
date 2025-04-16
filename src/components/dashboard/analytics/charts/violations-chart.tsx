@@ -65,73 +65,75 @@ export function ViolationsChart({ data: initialData = [], userId }: Props) {
         }}
         className="instant-tooltip"
       >
-        <style jsx global>{`
-          .instant-tooltip {
-            position: relative;
-          }
-          .instant-tooltip:hover::before {
-            content: "${entry?.payload?.fullName || value}";
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 4px 8px;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            border-radius: 4px;
-            font-size: 12px;
-            white-space: nowrap;
-            z-index: 1000;
-          }
-        `}</style>
         {entry?.payload?.shortName || value}
       </span>
     )
   }
 
   return (
-    <ResponsiveContainer width="100%" height={350}>
-      <PieChart>
-        <Pie
-          data={chartData}
-          dataKey="value"
-          nameKey="shortName"
-          cx="50%"
-          cy="50%"
-          outerRadius={120}
-        >
-          {chartData.map((_, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip 
-          formatter={(value, name, entry) => [
-            `${value} violations`,
-            (entry?.payload as any)?.fullName || name
-          ]}
-          wrapperStyle={{ opacity: 1 }}
-          contentStyle={{ 
-            background: 'rgba(0, 0, 0, 0.8)',
-            border: 'none',
-            borderRadius: '4px',
-            padding: '8px'
-          }}
-          itemStyle={{ color: 'white' }}
-        />
-        <Legend 
-          iconSize={0}
-          formatter={renderColorfulLegendText}
-          wrapperStyle={{ 
-            fontSize: '12px',
-            padding: '16px',
-            display: 'flex',
-            gap: '12px',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        />
-      </PieChart>
-    </ResponsiveContainer>
+    <>
+      <style dangerouslySetInnerHTML={{ __html: `
+        .instant-tooltip {
+          position: relative;
+        }
+        .instant-tooltip:hover::before {
+          content: "${chartData.map(item => `${item.shortName}:${item.fullName}`).join('|')}";
+          position: absolute;
+          bottom: 100%;
+          left: 50%;
+          transform: translateX(-50%);
+          padding: 4px 8px;
+          background: rgba(0, 0, 0, 0.8);
+          color: white;
+          border-radius: 4px;
+          font-size: 12px;
+          white-space: nowrap;
+          z-index: 1000;
+        }
+      `}} />
+      <ResponsiveContainer width="100%" height={350}>
+        <PieChart>
+          <Pie
+            data={chartData}
+            dataKey="value"
+            nameKey="shortName"
+            cx="50%"
+            cy="50%"
+            outerRadius={120}
+          >
+            {chartData.map((_, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip 
+            formatter={(value, name, entry) => [
+              `${value} violations`,
+              (entry?.payload as any)?.fullName || name
+            ]}
+            wrapperStyle={{ opacity: 1 }}
+            contentStyle={{ 
+              background: 'rgba(0, 0, 0, 0.8)',
+              border: 'none',
+              borderRadius: '4px',
+              padding: '8px'
+            }}
+            itemStyle={{ color: 'white' }}
+          />
+          <Legend 
+            iconSize={0}
+            formatter={renderColorfulLegendText}
+            wrapperStyle={{ 
+              fontSize: '12px',
+              padding: '16px',
+              display: 'flex',
+              gap: '12px',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    </>
   )
 } 
