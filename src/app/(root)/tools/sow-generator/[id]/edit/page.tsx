@@ -328,8 +328,9 @@ export default function SOWEdit() {
               <CardContent>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-1">Subject</label>
+                    <label htmlFor="subject" className="block text-sm font-medium mb-1">Subject</label>
                     <input
+                      id="subject"
                       type="text"
                       value={sow.metadata.subject}
                       onChange={(e) => updateMetadata("subject", e.target.value)}
@@ -337,8 +338,9 @@ export default function SOWEdit() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Topic</label>
+                    <label htmlFor="topic" className="block text-sm font-medium mb-1">Topic</label>
                     <input
+                      id="topic"
                       type="text"
                       value={sow.metadata.topic}
                       onChange={(e) => updateMetadata("topic", e.target.value)}
@@ -346,8 +348,9 @@ export default function SOWEdit() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Year Group</label>
+                    <label htmlFor="year-group" className="block text-sm font-medium mb-1">Year Group</label>
                     <input
+                      id="year-group"
                       type="number"
                       value={sow.metadata.ageGroup.year}
                       onChange={(e) => updateAgeGroup(parseInt(e.target.value) || 0)}
@@ -427,10 +430,11 @@ export default function SOWEdit() {
                         <div className="space-y-6">
                           <div className="flex items-center justify-between">
                             <div className="flex-1 mr-4">
-                              <label className="block text-sm font-medium mb-1">
+                              <label htmlFor={`lesson-${index}-title`} className="block text-sm font-medium mb-1">
                                 Lesson Title
                               </label>
                               <input
+                                id={`lesson-${index}-title`}
                                 type="text"
                                 value={lesson.title}
                                 onChange={(e) =>
@@ -440,10 +444,11 @@ export default function SOWEdit() {
                               />
                             </div>
                             <div className="w-32">
-                              <label className="block text-sm font-medium mb-1">
+                              <label htmlFor={`lesson-${index}-duration`} className="block text-sm font-medium mb-1">
                                 Duration (mins)
                               </label>
                               <input
+                                id={`lesson-${index}-duration`}
                                 type="number"
                                 value={lesson.duration}
                                 onChange={(e) =>
@@ -468,13 +473,14 @@ export default function SOWEdit() {
 
                           {/* Learning Objectives */}
                           <div>
-                            <label className="block text-sm font-medium mb-2">
+                            <label htmlFor={`lesson-${index}-objectives`} className="block text-sm font-medium mb-2">
                               Learning Objectives
                             </label>
-                            <div className="space-y-2">
+                            <div id={`lesson-${index}-objectives`} className="space-y-2">
                               {lesson.learningObjectives.map((objective, objIndex) => (
                                 <div key={objIndex} className="flex gap-2">
                                   <input
+                                    id={`lesson-${index}-objective-${objIndex}`}
                                     type="text"
                                     value={objective}
                                     onChange={(e) => {
@@ -521,10 +527,10 @@ export default function SOWEdit() {
 
                           {/* Activities */}
                           <div>
-                            <label className="block text-sm font-medium mb-2">
+                            <label htmlFor={`lesson-${index}-activities`} className="block text-sm font-medium mb-2">
                               Activities
                             </label>
-                            <div className="space-y-4">
+                            <div id={`lesson-${index}-activities`} className="space-y-4">
                               {lesson.activities.map((activity, actIndex) => (
                                 <div key={actIndex} className="border p-4 rounded-lg">
                                   <div className="flex items-center justify-between mb-2">
@@ -544,6 +550,7 @@ export default function SOWEdit() {
                                   </div>
                                   <div className="space-y-2">
                                     <input
+                                      id={`lesson-${index}-activity-${actIndex}-title`}
                                       type="text"
                                       value={activity.title}
                                       onChange={(e) => {
@@ -558,6 +565,7 @@ export default function SOWEdit() {
                                       className="w-full p-2 border rounded-md"
                                     />
                                     <textarea
+                                      id={`lesson-${index}-activity-${actIndex}-description`}
                                       value={activity.description}
                                       onChange={(e) => {
                                         const newActivities = [...lesson.activities];
@@ -572,6 +580,7 @@ export default function SOWEdit() {
                                       rows={3}
                                     />
                                     <input
+                                      id={`lesson-${index}-activity-${actIndex}-duration`}
                                       type="number"
                                       value={activity.duration}
                                       onChange={(e) => {
@@ -586,56 +595,59 @@ export default function SOWEdit() {
                                       className="w-full p-2 border rounded-md"
                                     />
                                     <div>
-                                      <label className="block text-sm font-medium mb-1">
+                                      <label htmlFor={`lesson-${index}-activity-${actIndex}-resources`} className="block text-sm font-medium mb-1">
                                         Resources
                                       </label>
-                                      {activity.resources.map((resource, resIndex) => (
-                                        <div key={resIndex} className="flex gap-2 mb-2">
-                                          <input
-                                            type="text"
-                                            value={resource}
-                                            onChange={(e) => {
-                                              const newActivities = [...lesson.activities];
-                                              newActivities[actIndex].resources[resIndex] =
-                                                e.target.value;
-                                              updateLesson(
-                                                index,
-                                                "activities",
-                                                newActivities
-                                              );
-                                            }}
-                                            className="flex-1 p-2 border rounded-md"
-                                          />
-                                          <Button
-                                            variant="destructive"
-                                            size="icon"
-                                            onClick={() => {
-                                              const newActivities = [...lesson.activities];
-                                              newActivities[actIndex].resources = activity.resources.filter(
-                                                (_, i) => i !== resIndex
-                                              );
-                                              updateLesson(
-                                                index,
-                                                "activities",
-                                                newActivities
-                                              );
-                                            }}
-                                          >
-                                            <Trash2 className="h-4 w-4" />
-                                          </Button>
-                                        </div>
-                                      ))}
-                                      <Button
-                                        variant="outline"
-                                        onClick={() => {
-                                          const newActivities = [...lesson.activities];
-                                          newActivities[actIndex].resources.push("");
-                                          updateLesson(index, "activities", newActivities);
-                                        }}
-                                      >
-                                        <Plus className="h-4 w-4 mr-2" />
-                                        Add Resource
-                                      </Button>
+                                      <div id={`lesson-${index}-activity-${actIndex}-resources`}>
+                                        {activity.resources.map((resource, resIndex) => (
+                                          <div key={resIndex} className="flex gap-2 mb-2">
+                                            <input
+                                              id={`lesson-${index}-activity-${actIndex}-resource-${resIndex}`}
+                                              type="text"
+                                              value={resource}
+                                              onChange={(e) => {
+                                                const newActivities = [...lesson.activities];
+                                                newActivities[actIndex].resources[resIndex] =
+                                                  e.target.value;
+                                                updateLesson(
+                                                  index,
+                                                  "activities",
+                                                  newActivities
+                                                );
+                                              }}
+                                              className="flex-1 p-2 border rounded-md"
+                                            />
+                                            <Button
+                                              variant="destructive"
+                                              size="icon"
+                                              onClick={() => {
+                                                const newActivities = [...lesson.activities];
+                                                newActivities[actIndex].resources = activity.resources.filter(
+                                                  (_, i) => i !== resIndex
+                                                );
+                                                updateLesson(
+                                                  index,
+                                                  "activities",
+                                                  newActivities
+                                                );
+                                              }}
+                                            >
+                                              <Trash2 className="h-4 w-4" />
+                                            </Button>
+                                          </div>
+                                        ))}
+                                        <Button
+                                          variant="outline"
+                                          onClick={() => {
+                                            const newActivities = [...lesson.activities];
+                                            newActivities[actIndex].resources.push("");
+                                            updateLesson(index, "activities", newActivities);
+                                          }}
+                                        >
+                                          <Plus className="h-4 w-4 mr-2" />
+                                          Add Resource
+                                        </Button>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
@@ -663,13 +675,14 @@ export default function SOWEdit() {
 
                           {/* Assessment */}
                           <div>
-                            <label className="block text-sm font-medium mb-2">
+                            <label htmlFor={`lesson-${index}-assessment`} className="block text-sm font-medium mb-2">
                               Assessment
                             </label>
-                            <div className="space-y-2">
+                            <div id={`lesson-${index}-assessment`} className="space-y-2">
                               {lesson.assessment.map((item, assIndex) => (
                                 <div key={assIndex} className="flex gap-2">
                                   <input
+                                    id={`lesson-${index}-assessment-${assIndex}`}
                                     type="text"
                                     value={item}
                                     onChange={(e) => {
@@ -708,10 +721,10 @@ export default function SOWEdit() {
 
                           {/* Differentiation */}
                           <div>
-                            <label className="block text-sm font-medium mb-2">
+                            <label htmlFor={`lesson-${index}-differentiation`} className="block text-sm font-medium mb-2">
                               Differentiation
                             </label>
-                            <div className="grid grid-cols-3 gap-4">
+                            <div id={`lesson-${index}-differentiation`} className="grid grid-cols-3 gap-4">
                               {["support", "core", "extension"].map((type) => (
                                 <div key={type}>
                                   <h4 className="font-medium mb-2 capitalize">{type}</h4>
@@ -720,6 +733,7 @@ export default function SOWEdit() {
                                       (item, diffIndex) => (
                                         <div key={diffIndex} className="flex gap-2">
                                           <input
+                                            id={`lesson-${index}-differentiation-${type}-${diffIndex}`}
                                             type="text"
                                             value={item}
                                             onChange={(e) => {
@@ -798,15 +812,16 @@ export default function SOWEdit() {
                               },
                             ].map(({ field, label }) => (
                               <div key={field}>
-                                <label className="block text-sm font-medium mb-2">
+                                <label htmlFor={`lesson-${index}-${field}`} className="block text-sm font-medium mb-2">
                                   {label}
                                 </label>
-                                <div className="space-y-2">
+                                <div id={`lesson-${index}-${field}`} className="space-y-2">
                                   {(['stretchTasks', 'scaffoldingStrategies', 'reflectionPrompts', 'crossCurricularLinks'].includes(field) ? 
                                     (lesson[field as keyof Lesson] as string[]).map(
                                     (item: string, itemIndex: number) => (
                                       <div key={itemIndex} className="flex gap-2">
                                         <input
+                                          id={`lesson-${index}-${field}-${itemIndex}`}
                                           type="text"
                                           value={item}
                                           onChange={(e) => {
